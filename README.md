@@ -1,6 +1,6 @@
-# 김준원표 만방 주간 통신문 아카이버
+# 김준원표 주간통신문 아카이버
 
-김준원표 만방학교 학부모페이지 아카이버. 물론 그냥 졸업하는데 학부모 페이지 다운받아 놓고 싶은 만방인도 쓸 수 있음^^
+김준원표 만방학교 학부모페이지 아카이버
 
 ## ✨ 주요 기능
 
@@ -10,8 +10,6 @@
 
 ## 🚀 시작하기
 
-### 1. 일반 설치파일 다운로드 받기
-
 <p align="center">
   <a href="https://github.com/notj-code/WBHPA_archiever/archive/refs/heads/main.zip">
     <img src="https://img.shields.io/badge/Download%20for%20Windows-%20-blue?logo=windows11&logoColor=white&style=for-the-badge" alt="Windows (x86)">
@@ -19,22 +17,6 @@
 </p>
 
 
-
-### 2. (필수아님) 파이썬으로 직접 돌리고 싶은 컴퓨터쟁이용
-
-Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶을 때 쓰면 됨. 물론 이런거 별로 안좋아하면 1번만 하고 건너뛰셈
-
-1.  **Python 설치:** Python 3.8 이상 깔려 있어야 함
-2.  **의존성 설치:** 프로젝트 폴더로 이동해서 아래 명령어로 필요한 라이브러리 설치하기
-    ```bash
-    pip install -r requirements.txt
-    ```
-    (`requirements.txt` 없으면 `selenium`, `fpdf`, `requests` 따로 설치해야 함: `pip install selenium fpdf requests`)
-3.  **WebDriver 다운로드:** 쓰는 크롬 버전에 맞는 `chromedriver.exe`를 프로젝트 루트 폴더에 넣기 ([Chrome WebDriver 다운로드 페이지](https://chromedriver.chromium.org/downloads))
-4.  **실행:** 아래 명령어로 앱 실행
-    ```bash
-    python gui_app.py
-    ```
 
 ## 💡 사용법
 
@@ -46,7 +28,7 @@ Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶�
 3.  **아카이빙 시작:**
     *   로그인된 크롬 창에서 **아카이빙 원하는 년도/학기 직접 선택**하기
     *   GUI에서 **"시작"** 버튼 누르기기
-    *   앱이 선택한 학기 모든 주간 통신문 자동으로 스크래핑해서 PDF로 변환, `weekly_notices` 폴더에 저장함. 진행 상황은 GUI 하단 상태 메시지에 계속 나옵니다다
+    *   앱이 선택한 학기 모든 주간 통신문 자동으로 스크래핑해서 PDF로 변환, `weekly_notices` 폴더에 저장함. 진행 상황은 GUI 하단 상태 바에
 4.  **아카이빙 중지:**
     *   스크래핑 중에 멈추고 싶으면 GUI에서 **"정지"** 버튼 누르면 됨
 5.  **저장된 폴더 열기:**
@@ -58,4 +40,4 @@ Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶�
     *   `chromedriver.exe`는 사용 중인 Chrome 브라우저 버전과 일치해야 함
     *   Chrome 브라우저 업데이트했으면 `chromedriver.exe`도 최신으로 바꿔야 함
     *   혹시 오류가 나면 **본인 chrome 버전과 일치하는** `chromedriver.exe` 재설치 해볼 것
-*   **웹사이트 변경:** 만방학교 학부모 페이지 HTML 구조 바뀌면 스크래핑 안될 수 있음. 이 경우 코드 수정 필요함. 코드 수정 해서 알아서 해보셈셈
+*   **웹사이트 변경:** 만방학교 학부모 페이지 HTML 구조 바뀌면 스크래핑 안될 수 있음. 이 경우 코드 수정 필요함.
