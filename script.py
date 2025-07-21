@@ -93,7 +93,7 @@ class WeeklyNoticeScraper:
         try:
             service = webdriver.chrome.service.Service(self.webdriver_path)
             self.driver = webdriver.Chrome(service=service, options=options)
-            self.wait = WebDriverWait(self.driver, 10) # Wait time reduced to 10s for faster feedback
+            self.wait = WebDriverWait(self.driver, 600) # 로그인 대기 시간을 10분(600초)으로 늘림
             return True
         except Exception as e:
             if progress_callback: progress_callback(f"WebDriver 초기화 오류: {e}")
