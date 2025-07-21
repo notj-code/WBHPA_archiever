@@ -6,24 +6,23 @@
 
 *   **자동화된 스크래핑:** Selenium WebDriver로 주간 통신문 페이지를를 자동으로 긁어온다
 *   **PDF 변환:** 긁어온 통신문이랑 이미지를 PDF로 변환해서 저장한다
-*   **이미지 변환:** 이미지 파일도 따로 저장한다
-*   **페이지 html 변환:** html도 혹시 몰라서 따로 저장
-*   **텍스트 변환:** 텍스트도 혹시 몰라서 따로 저장
 *   **폴더 자동 정리:** 학기별, 주차별로 통신문이 자동으로 분류되어... 저장된다
 
 ## 🚀 시작하기
 
 ### 1. 일반 설치파일 다운로드 받기
 
-1.  **릴리즈 페이지 들어가기:** [여기 클릭해서 최신 릴리즈 페이지로](https://junwonkim.com)
-2.  **파일 다운로드:** 아래 파일들 **모두 같은 폴더에 저장하기**
-    *   `gui_app.exe`
-    *   `chromedriver.exe` (쓰는 크롬 브라우저 버전에 맞는 거 써야 함. [Chrome WebDriver 다운로드 페이지](https://chromedriver.chromium.org/downloads)에서 자기 크롬 버전에 맞는 거 받으면 됨, 근데 왠만해선 그냥 딸려있는거로 될껄?)
-3.  **실행:** 받은 폴더에서 `gui_app.exe` 더블클릭해서 실행
+<p align="center">
+  <a href="https://github.com/notj-code/WBHPA_archiever/archive/refs/heads/main.zip">
+    <img src="https://img.shields.io/badge/Download%20for%20Windows-%20-blue?logo=windows11&logoColor=white&style=for-the-badge" alt="Windows (x86)">
+  </a>
+</p>
 
-### 2. 파이썬으로 직접 돌리고 싶은 컴퓨터쟁이용
 
-Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶을 때 쓰면 됨
+
+### 2. (필수아님) 파이썬으로 직접 돌리고 싶은 컴퓨터쟁이용
+
+Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶을 때 쓰면 됨. 물론 원하지 않으면 1번 파일만 저장 받고 건너 뛰셈셈
 
 1.  **Python 설치:** Python 3.8 이상 깔려 있어야 함
 2.  **의존성 설치:** 프로젝트 폴더로 이동해서 아래 명령어로 필요한 라이브러리 설치하기
@@ -39,7 +38,7 @@ Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶�
 
 ## 💡 사용법
 
-1.  **앱 실행:** `gui_app.exe` (아니면 `python gui_app.py`) 실행하면 GUI 창이 뜰거임임
+1.  **앱 실행:** `gui_app.exe` (아니면 `python gui_app.py`) 실행하면 GUI 창이 뜰거임
 2.  **로그인:**
     *   GUI에서 **"로그인하기"** 버튼 누르기
     *   새 크롬 창 뜨면 만방학교 학부모 페이지에 **직접 로그인**하기기
@@ -58,5 +57,5 @@ Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶�
 *   **`chromedriver.exe` 오류:**
     *   `chromedriver.exe`는 사용 중인 Chrome 브라우저 버전과 일치해야 함
     *   Chrome 브라우저 업데이트했으면 `chromedriver.exe`도 최신으로 바꿔야 함
-    *   `gui_app.exe`와 `chromedriver.exe` 같은 폴더에 있어야 함
-*   **웹사이트 변경:** 만방학교 학부모 페이지 HTML 구조 바뀌면 스크래핑 안될 수 있음. 이 경우 코드 수정 필요함
+    *   혹시 오류가 나면 **본인 chrome 버전과 일치하는** `chromedriver.exe` 재설치 해볼 것
+*   **웹사이트 변경:** 만방학교 학부모 페이지 HTML 구조 바뀌면 스크래핑 안될 수 있음. 이 경우 코드 수정 필요함. 코드 수정 해서 알아서 해보셈셈
