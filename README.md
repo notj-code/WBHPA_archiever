@@ -19,7 +19,6 @@
 2.  **파일 다운로드:** 아래 파일들 **모두 같은 폴더에 저장하기**
     *   `gui_app.exe`
     *   `chromedriver.exe` (쓰는 크롬 브라우저 버전에 맞는 거 써야 함. [Chrome WebDriver 다운로드 페이지](https://chromedriver.chromium.org/downloads)에서 자기 크롬 버전에 맞는 거 받으면 됨, 근데 왠만해선 그냥 딸려있는거로 될껄?)
-    *   `NotoSansKR-VariableFont_wght.ttf`
 3.  **실행:** 받은 폴더에서 `gui_app.exe` 더블클릭해서 실행
 
 ### 2. 파이썬으로 직접 돌리고 싶은 컴퓨터쟁이용

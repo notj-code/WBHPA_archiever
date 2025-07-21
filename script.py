@@ -74,12 +74,16 @@ def print_html_to_pdf_with_selenium(driver, title, page_text, page_images, pdf_f
         for img_path in page_images:
             if img_path and os.path.exists(img_path):
                 try:
+                    if progress_callback: progress_callback(f"  > HTML에 이미지 삽입 시도: {img_path}")
                     # 이미지를 base64로 인코딩하여 HTML에 직접 삽입
                     with open(img_path, "rb") as image_file:
                         encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
                     html_content += f'<img src="data:image/jpeg;base64,{encoded_string}" alt="Image"/>'
+                    if progress_callback: progress_callback(f"  > HTML에 이미지 삽입 성공: {img_path}")
                 except Exception as e:
                     if progress_callback: progress_callback(f"  > HTML에 이미지 삽입 실패: {img_path} - {e}")
+            else:
+                if progress_callback: progress_callback(f"  > 유효하지 않은 이미지 경로 또는 파일 없음: {img_path}")
 
         html_content += f"""
     </div>
@@ -284,14 +288,22 @@ class WeeklyNoticeScraper:
                     
                     page_images = []
                     try:
+                        content_element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".weekly_contents")))
                         img_elements = content_element.find_elements(By.TAG_NAME, "img")
+                        if progress_callback: progress_callback(f"  > 페이지에서 {len(img_elements)}개의 이미지 요소 감지.")
                         for j, img in enumerate(img_elements):
                             img_url = img.get_attribute("src")
                             if img_url:
+                                if progress_callback: progress_callback(f"  > 이미지 URL: {img_url}")
                                 img_name = f"{clean_notice_text}_page{page_num}_img{j+1}.jpg"
                                 downloaded_path = download_image(img_url, current_notice_folder, img_name)
                                 if downloaded_path:
                                     page_images.append(downloaded_path)
+                                    if progress_callback: progress_callback(f"  > 이미지 다운로드 성공: {downloaded_path}")
+                                else:
+                                    if progress_callback: progress_callback(f"  > 이미지 다운로드 실패: {img_url}")
+                            else:
+                                if progress_callback: progress_callback(f"  > 이미지 src 속성 없음: {img}")
                     except Exception as e:
                         if progress_callback: progress_callback(f"  > 이미지 추출/다운로드 실패: {e}")
                     
