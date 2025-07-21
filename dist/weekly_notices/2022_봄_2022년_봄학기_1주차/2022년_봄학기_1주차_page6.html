@@ -1,0 +1,601 @@
+<html><head>
+<meta charset="utf-8">
+<title>만방중고등학교 학생관리 시스템</title>
+<link href="/_Parent/css/lyout.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="/js/jquery.min.js"></script>
+
+<script language="javascript" src="/js/common.js?ver=241223"></script>
+<script type="text/javascript" src="/js/ajax_main.js"></script>
+<script language="javascript" src="/include/jqueryui/jquery-ui-1.10.3.custom.js"></script>
+<link href="/include/jqueryui/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/favicon.ico?20230823">
+<script language="javascript">
+	function week_Report(IDX){
+		popUpWindow("./WeekReportViewPrint.asp?IDX="+IDX, "week_Report_view", "660", "600", "yes", "no");
+	}
+
+	function SendFrom(){
+		var frm = document.frm1;
+
+		frm.action = "WeekReport_Save_Ok.asp";
+		frm.target = "iFrm";
+		frm.submit();
+	}
+	
+	function ScrollTop(){
+		window.scroll(0,0);	
+	}
+
+	$(document).ready(function() { 
+		$(document).on("click", "#P_LAST_WEEKREPORT_READED_YN", function() {
+			alert("주간통신문 확인이 완료되었습니다.");
+			//2025-01-03
+			var params = "IDX=120571&Left_weekYear=2022&Left_weekTerm=1";
+			params = params.replaceAll( "&P_LAST_WEEKREPORT_READED_YN=Y","" );
+
+			location.href = "/_Parent/WeeklyReport/WeekReportView.asp?"+params+"&P_LAST_WEEKREPORT_READED_YN=Y";
+		});
+	});
+</script>
+</head>
+<body style="">
+
+<div id="wrap">
+  
+  <div id="header" style="background:#f7f5cf;">
+    <div id="Top">
+      <div id="TopLogOut"><a href="/_Parent/Login/LogOut_Proc.asp"><img src="/_Parent/images/Logout.gif" width="98" height="23" border="0"></a></div>
+      <!--<div id="TopLog"><a href="/_Parent/"><img src="/_Parent/images/TopLog_240418_2.png" width="250" height="86" border="0"></a></div>//-->
+      <div id="TopLog"><a href="/_Parent/"><img src="/_Parent/images/TopLog_240425.png" width="250" height="86" border="0"></a></div>
+      <div id="TopMenu">
+        <dl><!-- 56 //-->
+          <dd><a href="/_Parent/WeeklyReport/WeekReportView.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_01b.jpg" border="0"><img src="/_Parent/images/sub_button_2024_01b.jpg" border="0" class="over"></a></dd>
+
+          <dd><a href="/_Parent/Report/List.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_02.jpg" border="0"><img src="/_Parent/images/sub_button_2024_02b.jpg" border="0" class="over"></a></dd>
+
+          <dd><a href="/_Parent/Pocketmoney/Pocketmoney.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_03.jpg" border="0"><img src="/_Parent/images/sub_button_2024_03b.jpg" border="0" class="over"></a></dd>
+          
+		  <dd><a href="/_Parent/college_calendar.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_04.jpg" border="0"><img src="/_Parent/images/sub_button_2024_04b.jpg" border="0" class="over"></a></dd>
+          
+		  <!--<dd><a href="/_Parent/Letter/List.asp" class="rollover"><img src="/_Parent/images/sub_menu04.gif" width="206" height="56" border="0"><img src="/_Parent/images/sub_menu04b.gif" width="206" height="56" border="0" class="over"></a></dd>-->
+          <dd><a href="/_Parent/MyPage/Member_Modify.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_05.jpg" border="0"><img src="/_Parent/images/sub_button_2024_05b.jpg" border="0" class="over"></a></dd>
+
+          <dd><a href="/_Parent/expenses/List.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_06.jpg" order="0"><img src="/_Parent/images/sub_button_2024_06b.jpg" border="0" class="over"></a></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+<!-- 실서버 업데이트 할때 하단 css 업데이트하면 좋을 것 같아요~ -->
+  <style>
+  /*lyout.css 36줄*/#TopMenu {padding: 0 0 0 32px;}
+  </style>
+  <div id="section">
+    
+<script language="javascript">
+
+</script>
+<div id="left">
+  <div id="leftcontents">
+    <div id="myinfo">
+      <div id="myinfo01">김준원 (SAP - 2반)</div>
+      <div id="myinfo02">
+       <div id="myphoto"><img src="/FileFolder/Student/2025022213142565.jpg" width="81" height="108"></div>
+       <div id="myprofile" style="width:140px;">
+       <span style="color:#cad27f">■</span> 학번 : G20212051<br>
+       <span style="color:#cad27f">■</span> 학적 : 11학년<br>
+       <span style="color:#cad27f">■</span> 가지 : 필리핀<br>
+       <span style="color:#cad27f">■</span> 생활관 : 308호<br>
+        &nbsp;&nbsp;&nbsp;(451-8812-0136)
+        </div>
+      </div>
+    </div>
+    <div id="leftweekly">
+      <div id="leftweeklytitle">만방국제학교 주간 통신문</div>
+      <div id="leftweeklyselect">
+        <form name="LeftFrm" method="get">
+        <select id="Left_weekYear" name="Left_weekYear" onchange="form.submit();">
+          
+          <option value="2011">2011</option>
+          
+          <option value="2012">2012</option>
+          
+          <option value="2013">2013</option>
+          
+          <option value="2014">2014</option>
+          
+          <option value="2015">2015</option>
+          
+          <option value="2016">2016</option>
+          
+          <option value="2017">2017</option>
+          
+          <option value="2018">2018</option>
+          
+          <option value="2019">2019</option>
+          
+          <option value="2020">2020</option>
+          
+          <option value="2021">2021</option>
+          
+          <option value="2022" selected="">2022</option>
+          
+          <option value="2023">2023</option>
+          
+          <option value="2024">2024</option>
+          
+          <option value="2025">2025</option>
+          
+        </select>년
+        &nbsp;&nbsp;
+        <select id="Left_weekTerm" name="Left_weekTerm" onchange="form.submit();">
+          <option value="1" selected="">봄</option>
+          <option value="3">가을</option>
+        </select>학기
+        &nbsp;&nbsp; 
+        </form>
+        </div>
+      <div id="leftweeklytext01"> 
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=124997&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 19주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=124772&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 18주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=124547&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 17주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=124300&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 16주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=124035&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 15주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=123770&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 14주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=123505&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 13주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=123240&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 12주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=122975&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 11주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=122710&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 10주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=122444&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 9주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=122177&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 8주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=121910&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 7주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=121643&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 6주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=121376&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 5주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=121108&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 4주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=120840&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 3주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=120571&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 2주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=120302&amp;Left_weekYear=2022&amp;Left_weekTerm=1">2022년 봄학기 1주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+      
+      </div>
+    </div>
+    <div class="left_banner"><a href="http://www.manbangschool.org/" target="_blank"><img src="/_Parent/images/banner002.png?ver=240508" width="236"></a><br><img src="/_Parent/images/banner003.png?ver=240509_1" width="236"></div>
+  </div>
+</div>
+
+    <div id="right">
+      
+      <div id="contenttitle">2022년 봄학기 2주차 주간통신문 </div>
+      <!--<div class="right_button2"><a href="javascript:week_Report('120571')"><img src="/_Parent/images/button_printer.gif" width="78" height="22" border="0" /></a></div>//-->
+      <div id="ContentMenu"><!-- 2024-02-23 -->
+        <dl>
+		
+			  <dd><img src="/_Parent/images/sub_button_24_02b.png" width="133" height="56" border="0"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_03a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_04a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_05a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_06a.png" width="133" height="56" align="absmiddle"></dd>
+			
+
+		</dl>
+      </div>
+      <div id="quick"><a href="javascript:ScrollTop();"><img src="/images/sub_top_button.gif" width="44" height="40" align="absmiddle"></a></div>
+      <div id="Contents">
+
+		 
+		<!-- 공지사항 //-->
+         <div class="sub_top_title"><a name="Weekly01" id="Weekly01"></a><img src="/_Parent/images/sub_top_title01_new.png" align="absmiddle"></div>
+         <div class="weekly_contents"><p><span style="font-family:돋움"><span style="font-size:12px"><span style="background-color:transparent">2022년 봄학기 2주차 주간통신문 입니다.&nbsp;</span><br>
+<span style="background-color:transparent">만방학교의 매주 보내드리는 가정통신문은 단순한 통신문이 아닌 학부모님께서 자녀를 위하여 바른 교육에 참여하시는 소통의 장입니다. 만방학교에서는 학부모님도 만방 선생님이십니다. 자녀를 지혜롭게 교육하기 위하여 학부모님들께서는 학교의 교육 방향을 이해하시고 한마음으로 협력하여 주시기 바랍니다.</span><br>
+<span style="background-color:transparent">주간통신문은 매주 수요일 오후 2시에 발행되며, 인터넷 상황에 따라 발행 시간이 다소 변동될 수 있습니다.</span></span></span><br>
+<br>
+&nbsp;</p>
+
+<p><span style="font-family:돋움"><span style="font-size:12px"><strong>1.&nbsp;일정</strong></span></span></p>
+
+<ul>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 7일(월) - 3월 12일(토) : 2차 귀교학생 방별 격리</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 8일(화) - 9일(수) : 청화대학 면접 (3차)</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 12일(토) : 1차 귀교학생: 미니운동회<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2차 귀교 학생: 방별 집중 격리기간 암기 단어 퀴즈</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 13일(일): 1차 귀교 학생: 초중 만바시 (JD 과제 소개)<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2차 귀교 학생: 새학기 OT</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 19일(토) - 20일(일) : 상해교통대학 필기시험 (필기시험 2주 후 면접시험)</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 19일(토) : 주말선택수업(1, 2차 귀교학생)</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 20일(일) : 3차 귀교</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 21일(월) - 3월 26일(토) : 3차 귀교학생 방별 격리</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 26일(토) : 주말선택수업(1, 2차 귀교학생)<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;Physics Bowl<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; National Economics Challenge Final(3/26-27, 4/4-4/5)</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">3월 26일(토) - 27일(일) : 복단대학 필기시험</span></span></p>
+	</li>
+	<li>
+	<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">4월 2일(토) : 주말선택수업 (전체 학생)</span></span></p>
+	</li>
+</ul>
+&nbsp;
+
+<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px"><strong>2. 대관령 캠퍼스 2차 귀교</strong><br>
+6일(일)에 2차로 대관령 캠퍼스에 귀교한 9, 10, 11학년, SAP10 학생들은 격리하는 일주일 동안 매일 건강체크, 체조 등 규칙적인 생활을 하면서 중국어, 영어 단어를 하루 100개 정도 암기하면서 어휘량을 집중적으로 늘리는 시간을 가지고 있습니다. 특히 고학년으로서 격리기간 동안 학습결손이 생기지 않도록 미리 교과서를 배부해서 배울 내용을 점검할 수 있도록 하였고, 과목별로 적절한 양의 숙제를 내주어 자기주도 학습 시간을 충분히 활용할 수 있도록 하였습니다. 매일 13일(일) 격리해제 후 14일(월)부터 정상적으로 face-to-face 수업, face-to-screen 수업에 참여할 것입니다.<br>
+<br>
+<br>
+<strong>3. 방별 전화 &nbsp;</strong><br>
+<span style="color:#0000FF">3월 13일(일) 저녁부터 새로운 방으로 조절되며 생활관 전화번호는 ‘학부모 페이지’에서 확인하실 수 있습니다.<br>
+현재 5층에서 방별격리기간을 가지는 학생들은 복도에 비치된 공중 전화기로 부모님께 연락을 드릴 수 있도록 하고 있습니다.</span><br>
+<span style="background-color:transparent"><span style="color:#0000FF">방별 집중 격리기간에는 22:00에 취침하게 되므로 그 전에 통화를 마무리할 수 있도록 협조해주시기 바랍니다.</span></span><br>
+공동체 생활을 위해 오수시간과 점호 이후 시간에는 전화사용을 하지 않도록 하고 있습니다. 부모님께서도 아래의 시간을 준수해 주시기 바랍니다.<br>
+&nbsp;&nbsp;<br>
+&nbsp; 1) 자녀가 집으로 전화를 거는 경우<br>
+&nbsp; &nbsp; &nbsp;- 반드시 국내 전화카드를 구입하여 사용한다.<strong>(생활관 게시판에 구입 신청 후 생활비 통장에서 비용 인출)<br>
+&nbsp; &nbsp; &nbsp;</strong>- 사용 가능 시간: 08:30 - 22:00<br>
+&nbsp; 2) 부모님께서 자녀의 방으로 전화를 거는 경우<br>
+&nbsp; &nbsp; &nbsp;- 평일: 20:10 - 22:00<strong> </strong>(6학년 - 8학년)<br>
+&nbsp; &nbsp; &nbsp;- 평일: 21:00 - 22:00 (9학년 - 12학년)<br>
+&nbsp; &nbsp; &nbsp;- 토요일: 17:00 - 22:00<br>
+&nbsp; &nbsp; &nbsp;- 일요일: 12:40 - 18:20, 20:10 - 22:00<br>
+<br>
+<br>
+<strong>4. 소포 및 편지 발송<br>
+&nbsp; &nbsp;</strong>1) 소포 발송 시 주의사항<br>
+&nbsp; &nbsp;&nbsp;- 학생들의 안전을 위해 블리스힐스테이 건물 전체를 대관하여 외부손님과의 접촉을 철저히 차단하였습니다. 소포 및 편지 배달과정에서의 깜깜이 전파의 가능성을 사전에 예방하기 위해 소독을 진행합니다.<br>
+&nbsp; &nbsp; - 검소하게 생활하며 가치있게 물질을 사용해야 함을 교육하는 의미에서 자녀에게 꼭 필요한 물건 외에는 택배를 자제하여 주시기 바랍니다.<br>
+&nbsp; &nbsp;&nbsp;- 학교에서 금지하는 화장품, 전자기기, 라면, 과자, 소시지, 햇반 등의 가공식품과 김치, 반찬류 등 상하기 쉬운 음식, 깨지기 쉬운 물건은 반송 및 폐기처분 할 수 있음을 알려드립니다.<br>
+&nbsp; &nbsp;&nbsp;- 특히 자녀의 건강에 해로운 과자, 라면, 햇반, 소시지 등은 절대로 보내지 마시고, 건강과 정서에 도움이 되는 과일, 넛츠, 에너지바, 좋은 초콜렛, 누룽지과자 등 몸에 좋은 간식으로 보내주시기를 신신 당부드립니다. 우리 학생들의 정신적, 육체적 건강에 해로운 음식은 먹지 않도록 지속적으로 교육하고 있으니 자녀가 해로운 간식을 보내달라고 하면 부모님께서 교육을 해주시고 선생님들께서 학생들의 건강을 위해 수고하심에 감사하면서 스스로 절제하고 관리하도록 자녀를 이끌어 주시기 바랍니다.<br>
+&nbsp; &nbsp;&nbsp;- 블리스힐스테이 이외의 장소로 소포 및 편지를 발송하는 경우에는 학생들이 정상적으로 받기 어렵습니다.<br>
+&nbsp;&nbsp;2) 택배보내실 용평리조트 주소<br>
+&nbsp; &nbsp;주소: 강원도 평창군 대관령면 올림픽로 715, 용평리조트 블리스힐스테이 2층<br>
+&nbsp; &nbsp;(이름: <strong>홍길동</strong> / 전화번호: 070-7437-1238)<br>
+<br>
+<span style="color:#0000FF">&nbsp;&nbsp;<strong>- 분실 위험이 있으므로 주소에 ‘학생 이름’을 반드시 기입해 주시기 바랍니다. (택배사에 따라 주소에 만방국제학교를 적는 경우 만방****와 같이 송장에 기록되어서 학생들이 본인 택배를 찾기 어려운 경우가 있습니다. 블리스힐스테이 전체를 대관해서 사용하므로 앞으로는 주소에 만방국제학교는 기입하지 않으셔도 됩니다.)</strong></span><br>
+<br>
+<br>
+<strong>5. 병가 및 청가<br>
+&nbsp;&nbsp;</strong>1) 병원 진료, 수술, 시험 응시(11, 12학년), 중요 가족 행사(장례, 친인척 결혼식)등의 사유로 수업에 참여하지 못하는 경우에 사전에 학교로 연락하시면 청가 신청서를 보내드리겠습니다.<br>
+&nbsp;&nbsp;2) 청가 신청서를 제출하지 않거나, 병원 진료, 수술, 시험 응시, 중요 가족 행사 외의 사유는 학교의 청가 원칙에 따라 결석처리 될 수 있음을 알려드립니다.<br>
+&nbsp; 3) 귀교 시 처방전, 의사진단서, 소견서, 입원확인서 등 증명 자료를 제출해야 출석을 인정받을 수 있습니다. 학기 성적은 매 시간 수업태도, 과제물, Weekly test 등을 종합적으로 반영하여 산출하므로 병가로 수업에 참여하지 못하는 경우 성적에 영향을 미칠 수 있음을 참고해주시기 바랍니다.<br>
+&nbsp;&nbsp;4) 청가 기간에는 귀교 전까지 온라인으로 수업에 성실하게 참여하며 장소 이동 등으로 참여하지 못한 수업은 추후 Office hour를 이용하여 개별적으로 보충할 수 있도록 합니다.<br>
+&nbsp;<span style="color:#0000FF">&nbsp;5) 특별당부사항: 일상생활 곳곳에서 코로나19 감염 확산이 지속되면서 더욱 철저한 자가격리 및 건강관리 기간을 갖도록 적극적으로 협조해 주시기 바랍니다.<br>
+&nbsp; &nbsp; &nbsp;- 병원 방문 및 시험 응시로 인하여 귀가를 하는 경우에는 병원 및 시험장을 방문하는 것 이외에는 일주일간 철저하게 가정에서 자가격리를 하며 외부 장소 방문 및 외부인과의 접촉을 최소화해주시고 방역 및 위생에 각별히 주의할 것을 당부드립니다.&nbsp;<br>
+&nbsp; &nbsp; &nbsp;- 학기 중 귀가하는 경우 병원 내원 또는 시험장 방문일로부터 1주간 가정에서 철저한 자가격리 및 건강체크를 필수적으로 해주시기 바랍니다. 귀교 전 3일 이내에 코로나 신속항원검사를 다시 받은 후 귀교 하루 전까지 음성확인서를 촬영하여 학교 e-mail로 반드시 제출해야 귀교를 할 수 있습니다.<br>
+&nbsp; &nbsp;&nbsp;- 부모님들의 개인적인 이유로 인하여 격리기간 전에 귀교하길 원하시는 부모님들의 요청이 오고 있습니다. 학생들이 공동체 생활을 하기에 혹여 한 학생이라도 문제가 생기면 모든 학생들에게 어려움이 발생되기 때문에 학교에서는 원칙대로 실행 할 수 밖에 없음을 이해하여 주시기 바랍니다.</span><br>
+<br>
+<br>
+<strong>6. 필독서&nbsp;</strong><br>
+JD를 마치고 책을 한 권씩 가져와서 Lending Library를 통해 공유하고 있습니다. 함께 만들어가는 도서관을 통해 책과 더욱 친밀한 관계를 형성하고, 지식 및 지혜, 고차사고력 함양에 좋은 계기가 되고 있습니다. 필독서를 가져 오지 않은 경우에는 택배로 발송해주시기 바랍니다.<br>
+<br>
+<br>
+<strong>7.&nbsp;</strong><strong>정보수정</strong><br>
+원활한 연락을 위해 아래 사항이 변경된 경우에는 만방학교 홈페이지 [학부모 공간] → [정보 수정]에서 반드시 수정해 주시기 바랍니다.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">&nbsp;&nbsp;1) 거주지<br>
+&nbsp;&nbsp;2) 전화번호<br>
+&nbsp;&nbsp;3) 이메일 주소(학부모님, 학생)<br>
+&nbsp;&nbsp;4) 여권 정보<br>
+<br>
+<br>
+<strong>8. 생활비 입금 및 주의사항</strong><br>
+본교에서는 학생들이 생활비를 계획적으로 관리하고 사용할 수 있도록 생활비 통장 시스템을 운영합니다. 생활비는 매주 한번 가지 선생님을 통해 신청하고 수령합니다. 생활비 관리는 학생들이 생활비를 미리 계획하고 규모 있게 사용하도록 훈련하는 매우 중요한 재정 교육의 한 부분입니다. 단순히 자신을 위해 계획적으로 사용하는 것이 아니라, 받은 것에 감사하며 나눌 수 있는 여러 가지 방법을 고민하면서 재정에 있어서 자유하고 나눔의 기쁨을 찾아갈 수 있도록 지도합니다.<br>
+<br>
+학교에서 공식적인 일로 개인이 부담해야 할 금액은 학교에서 공제한 후 본인이 확인하며, 학생들이 사용한 생활비 내역은 홈페이지 [학부모 공간] → [용돈 관리 조회] → [한국 캠퍼스 생활비 조회]에서 확인하실 수 있습니다.<br>
+<br>
+(주의) 부모님께서는 아래와 같이 생활비를 입금해주시기 바랍니다.<br>
+&nbsp;&nbsp;1) 학비, 생활비 입금 확인 등 재정 관련 사항은 manbangtuition@gmail.com으로 문의하시기 바랍니다.<br>
+&nbsp;<span style="color:rgb(0, 0, 255)">&nbsp;2) 학비와 생활비 입금에 혼선이 생기지 않도록 생활비는 반드시 아래의 계좌로 입금해주시기 바랍니다.<br>
+&nbsp; &nbsp; &nbsp;- 국민은행 760702-04-266005 (예금주: LINHAISONG)</span><br>
+&nbsp; 3) 행정착오 방지를 위하여 생활비 입금 시 동명이인을 구분하는 영문자를 포함해 주시기 바랍니다.(예: 이정준A, 이정준B)<br>
+&nbsp;&nbsp;4) 생활비 잔액이 한화100,000원 미만일 경우에는 해당 학생의 용돈 지급이 중지될 수 있으니 잔액이 부족하지 않도록 확인하여 주시고, 원활한 행정 업무를 위하여 한화 500,000원 이상 입금해 주시기 바랍니다.<br>
+&nbsp;&nbsp;5) 자녀 생활비를 입금하신 후에는 보다 신속한 처리를 위하여 입금 상황을 학교생활비 관리 메일로 보내주시기 바랍니다.&nbsp;<br>
+&nbsp;&nbsp;6) 학생들의 교육을 위해 개별적으로 현금 또는 체크카드 등을 소지하지 않도록 해주시기 바랍니다.<br>
+<br>
+<br>
+<strong>9. 학부모 상담 방법 및 절차</strong><br>
+학부모님들의 상담을 담당하시는 선생님이 계십니다. 모든 선생님들께서 학생들을 위해서 효과적으로 시간을 사용하기 위해서 정한 원칙입니다.<br>
+학생들을 위하여 나무 선생님, 가지 선생님, 생활관 사감 선생님, 학과 선생님, 반주임 선생님 등 모든 선생님들이 함께 협력하여 학생들을 교육하고 있으며, 학생들의 상황을 항상 공유하고 소통하고 있으니 학부모님들께서는 효율적인 상담 진행을 위하여 아래의 사항을 지켜주시기 바랍니다.<br>
+&nbsp;&nbsp;<span style="color:rgb(0, 0, 255)">1) 자녀에 대한 모든 상담요청은 학교 공식메일(manbangschool@gmail.com)로 보내 주시기 바랍니다.<br>
+&nbsp;&nbsp;2) 학부모님 감상문에는 감상을 기록하시는 장이므로 상담요청이나 부탁사항을 기록하셔도 학교에서 답변을 드리지 않는 것이 원칙입니다.<br>
+&nbsp; 3) 자녀에 대한 상담요청이나 부탁사항을 학교의 공식메일에 구체적으로 기록해서 보내주시면 담당 선생님께서 메일 또는 전화로 연락을 드릴 것입니다.</span><br>
+<br>
+<br>
+<strong>10. 3월 학부모 필독서<br>
+[엘론 머스크, 대담한 도전] 저자: 다케우치 가즈마사 / 출판사: 비즈니스북스</strong></span></span><br>
+&nbsp;</p>
+
+<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px"><strong><img src="https://lh4.googleusercontent.com/phij9A27fqmzZzGn0L4RgXqCmC8LnHBXcOkKauEyo5GEPfEONx_hHUEru5BnUfqR3EXCNle3ix16fHK-JZ4GeSqDKB5XZh6XzRlkYnH11Euxcp8MQaKFj9aLVdDbk18tG136klmo" style="border-style:solid; border-width:1px; float:left; height:177px; margin:5px; width:120px"></strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px">애플의 스티브 잡스가 세상을 떠나자 실리콘 밸리의 관심은 누가 ‘제2의 스티브 잡스’가 될 것인가에 집중되었습니다. 그러나 고민은 오래가지 않았습니다. 《포춘》, 《타임》, 《뉴욕 타임스》 등 미국의 주요 언론 매체들이 압도적으로 한 사람을 지목했기 때문입니다. 바로 전기자동차, 우주로켓, 태양광발전 사업에서 독보적인 성과를 보이고 있는 엘론 머스크입니다.<br>
+우리와 우리 학생들은 그의 대담한 도전정신을 배울 필요가 있습니다. 난관을 극복하는 능력, 돈을 벌기 보다는 인류를 위한 사명감, 절대로 포기하지 않는 근성 등은 만방이 추구하는 교육에 부합되므로 이 책을 3월 학부모 필독서로 추천합니다.</span></span></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+&nbsp;
+<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:12px"><span style="background-color:transparent">* 만방국제학교 홈페이지(</span><a href="http://www.manbangschool.org)" target="_blank"><span style="color:rgb(0, 0, 255)"><span style="background-color:transparent">http://www.manbangschool.org</span></span></a><span style="background-color:transparent"><a href="http://www.manbangschool.org)" target="_blank"><span style="color:rgb(0, 0, 255)">)</span></a>를 방문하시기 바랍니다.<br>
+학사일정과 주요 소식들을 보실 수 있습니다.</span></span></span></p>
+</div>
+		<!-- 공지사항 //-->
+		
+
+      </div>
+      
+	 <div class="pagination"><!-- 2024-02-23 -->
+		
+		<!--<span>1 / 5</span>//-->
+		
+		<a class="next" href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=120571&amp;P_WEEKREPORT_PAGE=2&amp;Left_weekYear=2022&amp;Left_weekTerm=1"><img src="/_Parent/images/sub_bottom_arrow_next.png" width="135" onmouseover="this.src='/_Parent/images/sub_bottom_arrow_nextb.png'" onmouseout="this.src='/_Parent/images/sub_bottom_arrow_next.png'"></a>
+		
+	 </div>
+    </div>
+  </div>
+</div>
+<style>
+/* Main_Popup */
+.main_popup_w {position:relative; width:100%; height:0; margin:0;}
+.main_popup_w p{margin:0; padding:0;}
+.main_popup_w .main_popup { background:#fff; z-index:10000000; border:1px solid #1c1c1c; position:absolute; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); }
+.main_popup_w .main_popup dl { margin:-1px;overflow:hidden;background:#1c1c1c; height:40px;}
+.main_popup_w .main_popup dl dt { float:left; padding:8px 0 0 10px;}
+.main_popup_w .main_popup dl dt a { font-size:13px; color:#fff;text-decoration:none;}
+.main_popup_w .main_popup dl dd { float:right; text-align:right; padding:8px 10px 0 0 ;}
+.main_popup_w .main_popup dl dd a { text-align:right; font-size:12px; color:rgba(255, 255, 255, 0.5);}
+.main_popup_w .main_popup .main_popup_con {/*overflow:hidden;*/line-height:0;}
+.main_popup_w .main_popup .main_popup_con *{line-height:1.6;}
+.main_popup_w .main_popup .main_popup_con img { width:100% !important;line-height:0;height:auto !important}
+</style>
+
+
+
+<!-- Popup //-->
+<script>
+$(document).ready(function() { 
+	
+});
+
+function w_main_popup_close(id_name){
+	$("#"+id_name).hide();
+}
+
+function w_today_close(id_name, expiredays) {
+	SetCookie(id_name, "expire", expiredays);
+	var blnCookie = GetCookie(id_name);
+	$("#"+id_name).hide();
+}
+
+// 창열기  
+function w_today_open(id_name) {
+	var blnCookie = $.trim(GetCookie(id_name));
+	if (blnCookie == "") {
+		$("#"+id_name).show();
+	} else {
+		$("#"+id_name).hide();
+	}
+}
+</script>
+<!-- Popup //-->
+
+
+
+
+
+<style>
+#modal {
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index:999999;
+}
+
+#modal h2 {
+  margin:0;   
+}
+
+#modal button {
+  display:inline-block;
+}
+
+#modal .modal_content {
+  width:450px;
+  height:100px;
+  margin:80px 480px;
+  padding:20px 10px;
+  background:#fff;
+  border:2px solid #666;
+}
+
+#modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}   
+</style>
+
+<div id="modal" style="display: none;">
+   
+    <div class="modal_content">
+
+		<table border="0">
+		<tbody><tr>
+			<td colspan="2">
+				<h3>개인정보 보호를 위해 3개월에 한번씩 비밀번호를 변경해주세요.</h3>			
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td width="50%">
+				<div style="float:left;"><input type="checkbox" name="chkbox" id="todaycloseyn" value="Y"></div>
+				<div style="float:left;margin-top:2px;">오늘하루 열지않기</div>
+			</td>
+			<td>
+				<div style="float:right;">
+					<button type="button" onclick="javascript:closeWin();">닫기</button>						
+				</div>
+				<div style="float:right;margin-right:5px;">
+					<button type="button" onclick="javascript:location.href='/_Parent/MyPage/Member_Modify.asp';">지금변경하기</button>						
+				</div>
+			</td>
+		</tr>
+		</tbody></table>
+       
+    </div>
+   
+    <div class="modal_layer"></div>
+</div>
+
+<script>
+
+    //쿠키설정    
+    function setCookie( name, value, expiredays ) {
+    var todayDate = new Date();
+		todayDate.setDate( todayDate.getDate() + expiredays );
+		document.cookie = name + '=' + escape( value ) + '; path=/; expires=' + todayDate.toGMTString() + ';'
+    }
+
+    //쿠키 불러오기
+    function getCookie(name) 
+    { 
+        var obj = name + "="; 
+        var x = 0; 
+        while ( x <= document.cookie.length ) 
+        { 
+            var y = (x+obj.length); 
+            if ( document.cookie.substring( x, y ) == obj ) 
+            { 
+                if ((endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) 
+                    endOfCookie = document.cookie.length;
+                return unescape( document.cookie.substring( y, endOfCookie ) ); 
+            } 
+            x = document.cookie.indexOf( " ", x ) + 1; 
+            
+            if ( x == 0 ) break; 
+        } 
+        return ""; 
+    }
+
+    //닫기 버튼 클릭시
+    function closeWin(key)
+    {
+        if($("#todaycloseyn").prop("checked"))
+        {
+            setCookie('modalpop', 'Y' , 1 );
+        }
+        $("#modal").hide();
+    }
+  
+    $(function(){    
+        if(getCookie("modalpop") != "Y"){
+            $("#modal").show();
+        }else if(getCookie("modalpop") != "N"){
+            $("#modal").hide();		
+		}
+    });
+
+</script>
+
+
+
+
+
+</body></html>

@@ -1,29 +1,67 @@
-# WB Hakboomo Page Archiever (for JaTui guys)
+# 김준원표 만방 주간 통신문 아카이버
 
- 물론 자퇴 안하고 그냥 졸업하는데 학부모 페이지 다운받아 놓고 싶은 만방인이어도 쓸 수 있음^^
- <p> Take a try~</p>
+김준원표 만방학교 학부모페이지 아카이버. 물론 자퇴 안하고 그냥 졸업하는데 학부모 페이지 다운받아 놓고 싶은 만방인이어도 쓸 수 있음^^
 
-> [For Mac (Apple Silicon)](junwonkim.com) </br>
-> [For Mac (X86, 박기정꺼)](junwonkim.com) </br>
-> [For Window](junwonkim.com)
+## ✨ 주요 기능
 
+*   **자동화된 스크래핑:** Selenium WebDriver로 주간 통신문 페이지를를 자동으로 긁어온다
+*   **PDF 변환:** 긁어온 통신문이랑 이미지를 PDF로 변환해서 저장한다
+*   **이미지 변환:** 이미지 파일도 따로 저장한다
+*   **페이지 html 변환:** html도 혹시 몰라서... 따로 저장한다
+*   **텍스트 변환:** 텍스트도 혹시 몰라서... 따로 저장한다
+*   **폴더 자동 정리:** 학기별, 주차별로 통신문이 자동으로 분류되어... 저장된다..
 
-# 사용방법
+## 🚀 시작하기
 
-### 사전 설정 I
-```
-font.ttf
-```
-라고 적혀있는데 더블 클릭해서 폰트 설치하기
+### 1. 일반 설치파일 다운로드 받기
 
-### 사전 설정 II
-- Microsoft Store 가서 "python 3.1.1" 설치하기
+1.  **릴리즈 페이지 들어가기:** [여기 클릭해서 최신 릴리즈 페이지로](https://junwonkim.com)
+2.  **파일 다운로드:** 아래 파일들 **모두 같은 폴더에 저장하기**
+    *   `gui_app.exe`
+    *   `chromedriver.exe` (쓰는 크롬 브라우저 버전에 맞는 거 써야 함. [Chrome WebDriver 다운로드 페이지](https://chromedriver.chromium.org/downloads)에서 자기 크롬 버전에 맞는 거 받으면 됨, 근데 왠만해선 그냥 딸려있는거로 될껄?)
+    *   `NotoSansKR-VariableFont_wght.ttf`
+3.  **실행:** 받은 폴더에서 `gui_app.exe` 더블클릭해서 실행
 
-### 3. 실행
+### 2. 파이썬으로 직접 돌리고 싶은 컴퓨터쟁이용
 
-```
-script.py
-```
-더블 클릭하면 검정터미널이 나올 거임. 조금 기다리면 로그인 페이지도 뜨는데 그때 id, 비밀번호를 직접 입력해주면 됨
+Python 환경 세팅돼 있고, 직접 코드 실행하거나 수정하고 싶을 때 쓰면 됨
 
+1.  **Python 설치:** Python 3.8 이상 깔려 있어야 함
+2.  **의존성 설치:** 프로젝트 폴더로 이동해서 아래 명령어로 필요한 라이브러리 설치하기
+    ```bash
+    pip install -r requirements.txt
+    ```
+    (`requirements.txt` 없으면 `selenium`, `fpdf`, `requests` 따로 설치해야 함: `pip install selenium fpdf requests`)
+3.  **WebDriver 다운로드:** 쓰는 크롬 버전에 맞는 `chromedriver.exe`를 프로젝트 루트 폴더에 넣기 ([Chrome WebDriver 다운로드 페이지](https://chromedriver.chromium.org/downloads))
+4.  **폰트 파일 준비:** `NotoSansKR-VariableFont_wght.ttf` 파일도 프로젝트 루트 폴더에 넣기기
+5.  **실행:** 아래 명령어로 앱 실행
+    ```bash
+    python gui_app.py
+    ```
 
+## 💡 사용법
+
+1.  **앱 실행:** `gui_app.exe` (아니면 `python gui_app.py`) 실행하면 GUI 창이 뜰거임임
+2.  **로그인:**
+    *   GUI에서 **"로그인하기"** 버튼 누르기
+    *   새 크롬 창 뜨면 만방학교 학부모 페이지에 **직접 로그인**하기기
+    *   로그인 완료되고 주간 통신문 페이지 뜨면 GUI에 "로그인 상태"가 "로그인 됨"으로 바뀜
+3.  **아카이빙 시작:**
+    *   로그인된 크롬 창에서 **아카이빙 원하는 년도/학기 직접 선택**하기
+    *   GUI에서 **"시작"** 버튼 누르기기
+    *   앱이 선택한 학기 모든 주간 통신문 자동으로 스크래핑해서 PDF로 변환, `weekly_notices` 폴더에 저장함. 진행 상황은 GUI 하단 상태 메시지에 계속 나옵니다다
+4.  **아카이빙 중지:**
+    *   스크래핑 중에 멈추고 싶으면 GUI에서 **"정지"** 버튼 누르면 됨
+5.  **저장된 폴더 열기:**
+    *   아카이빙 끝나거나 중지한 뒤 **"저장된 폴더 열기"** 버튼 누르면 통신문 저장된 `weekly_notices` 폴더 열림
+
+## ⚠️ 주의사항 및 문제 해결
+
+*   **`chromedriver.exe` 오류:**
+    *   `chromedriver.exe`는 사용 중인 Chrome 브라우저 버전과 일치해야 함
+    *   Chrome 브라우저 업데이트했으면 `chromedriver.exe`도 최신으로 바꿔야 함
+    *   `gui_app.exe`와 `chromedriver.exe` 같은 폴더에 있어야 함
+*   **PDF 한글 깨짐/미표시:**
+    *   `NotoSansKR-VariableFont_wght.ttf` 파일이 `gui_app.exe`와 같은 폴더에 있어야 함
+    *   폰트 파일 손상됐을 수 있으니 다시 다운로드해서 시도해볼 것
+*   **웹사이트 변경:** 만방학교 학부모 페이지 HTML 구조 바뀌면 스크래핑 안될 수 있음. 이 경우 코드 수정 필요함

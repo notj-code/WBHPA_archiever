@@ -1,0 +1,520 @@
+<html><head>
+<meta charset="utf-8">
+<title>만방중고등학교 학생관리 시스템</title>
+<link href="/_Parent/css/lyout.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="/js/jquery.min.js"></script>
+
+<script language="javascript" src="/js/common.js?ver=241223"></script>
+<script type="text/javascript" src="/js/ajax_main.js"></script>
+<script language="javascript" src="/include/jqueryui/jquery-ui-1.10.3.custom.js"></script>
+<link href="/include/jqueryui/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/favicon.ico?20230823">
+<script language="javascript">
+	function week_Report(IDX){
+		popUpWindow("./WeekReportViewPrint.asp?IDX="+IDX, "week_Report_view", "660", "600", "yes", "no");
+	}
+
+	function SendFrom(){
+		var frm = document.frm1;
+
+		frm.action = "WeekReport_Save_Ok.asp";
+		frm.target = "iFrm";
+		frm.submit();
+	}
+	
+	function ScrollTop(){
+		window.scroll(0,0);	
+	}
+
+	$(document).ready(function() { 
+		$(document).on("click", "#P_LAST_WEEKREPORT_READED_YN", function() {
+			alert("주간통신문 확인이 완료되었습니다.");
+			//2025-01-03
+			var params = "IDX=147669&P_WEEKREPORT_PAGE=3&Left_weekYear=2025&Left_weekTerm=1";
+			params = params.replaceAll( "&P_LAST_WEEKREPORT_READED_YN=Y","" );
+
+			location.href = "/_Parent/WeeklyReport/WeekReportView.asp?"+params+"&P_LAST_WEEKREPORT_READED_YN=Y";
+		});
+	});
+</script>
+</head>
+<body style="">
+
+<div id="wrap">
+  
+  <div id="header" style="background:#f7f5cf;">
+    <div id="Top">
+      <div id="TopLogOut"><a href="/_Parent/Login/LogOut_Proc.asp"><img src="/_Parent/images/Logout.gif" width="98" height="23" border="0"></a></div>
+      <!--<div id="TopLog"><a href="/_Parent/"><img src="/_Parent/images/TopLog_240418_2.png" width="250" height="86" border="0"></a></div>//-->
+      <div id="TopLog"><a href="/_Parent/"><img src="/_Parent/images/TopLog_240425.png" width="250" height="86" border="0"></a></div>
+      <div id="TopMenu">
+        <dl><!-- 56 //-->
+          <dd><a href="/_Parent/WeeklyReport/WeekReportView.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_01b.jpg" border="0"><img src="/_Parent/images/sub_button_2024_01b.jpg" border="0" class="over"></a></dd>
+
+          <dd><a href="/_Parent/Report/List.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_02.jpg" border="0"><img src="/_Parent/images/sub_button_2024_02b.jpg" border="0" class="over"></a></dd>
+
+          <dd><a href="/_Parent/Pocketmoney/Pocketmoney.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_03.jpg" border="0"><img src="/_Parent/images/sub_button_2024_03b.jpg" border="0" class="over"></a></dd>
+          
+		  <dd><a href="/_Parent/college_calendar.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_04.jpg" border="0"><img src="/_Parent/images/sub_button_2024_04b.jpg" border="0" class="over"></a></dd>
+          
+		  <!--<dd><a href="/_Parent/Letter/List.asp" class="rollover"><img src="/_Parent/images/sub_menu04.gif" width="206" height="56" border="0"><img src="/_Parent/images/sub_menu04b.gif" width="206" height="56" border="0" class="over"></a></dd>-->
+          <dd><a href="/_Parent/MyPage/Member_Modify.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_05.jpg" border="0"><img src="/_Parent/images/sub_button_2024_05b.jpg" border="0" class="over"></a></dd>
+
+          <dd><a href="/_Parent/expenses/List.asp" class="rollover"><img src="/_Parent/images/sub_button_2024_06.jpg" order="0"><img src="/_Parent/images/sub_button_2024_06b.jpg" border="0" class="over"></a></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+<!-- 실서버 업데이트 할때 하단 css 업데이트하면 좋을 것 같아요~ -->
+  <style>
+  /*lyout.css 36줄*/#TopMenu {padding: 0 0 0 32px;}
+  </style>
+  <div id="section">
+    
+<script language="javascript">
+
+</script>
+<div id="left">
+  <div id="leftcontents">
+    <div id="myinfo">
+      <div id="myinfo01">김준원 (SAP - 2반)</div>
+      <div id="myinfo02">
+       <div id="myphoto"><img src="/FileFolder/Student/2025022213142565.jpg" width="81" height="108"></div>
+       <div id="myprofile" style="width:140px;">
+       <span style="color:#cad27f">■</span> 학번 : G20212051<br>
+       <span style="color:#cad27f">■</span> 학적 : 11학년<br>
+       <span style="color:#cad27f">■</span> 가지 : 필리핀<br>
+       <span style="color:#cad27f">■</span> 생활관 : 308호<br>
+        &nbsp;&nbsp;&nbsp;(451-8812-0136)
+        </div>
+      </div>
+    </div>
+    <div id="leftweekly">
+      <div id="leftweeklytitle">만방국제학교 주간 통신문</div>
+      <div id="leftweeklyselect">
+        <form name="LeftFrm" method="get">
+        <select id="Left_weekYear" name="Left_weekYear" onchange="form.submit();">
+          
+          <option value="2011">2011</option>
+          
+          <option value="2012">2012</option>
+          
+          <option value="2013">2013</option>
+          
+          <option value="2014">2014</option>
+          
+          <option value="2015">2015</option>
+          
+          <option value="2016">2016</option>
+          
+          <option value="2017">2017</option>
+          
+          <option value="2018">2018</option>
+          
+          <option value="2019">2019</option>
+          
+          <option value="2020">2020</option>
+          
+          <option value="2021">2021</option>
+          
+          <option value="2022">2022</option>
+          
+          <option value="2023">2023</option>
+          
+          <option value="2024">2024</option>
+          
+          <option value="2025" selected="">2025</option>
+          
+        </select>년
+        &nbsp;&nbsp;
+        <select id="Left_weekTerm" name="Left_weekTerm" onchange="form.submit();">
+          <option value="1" selected="">봄</option>
+          <option value="3">가을</option>
+        </select>학기
+        &nbsp;&nbsp; 
+        </form>
+        </div>
+      <div id="leftweeklytext01"> 
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=150341&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 21주차</a> <span style="font-size:11px;color:#808080">[읽지 않음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=150199&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 20주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=150057&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 19주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149915&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 18주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149773&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 17주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149631&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 16주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149489&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 15주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149347&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 14주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149205&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 13주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=149062&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 12주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=148908&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 11주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=148731&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 10주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=148554&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 9주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=148377&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 8주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=148200&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 7주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=148023&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 6주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147846&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 5주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147669&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 4주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147492&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 3주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147315&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 2주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147138&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 1주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+
+<div class="leftweeklytext01">
+
+<a href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=146961&amp;Left_weekYear=2025&amp;Left_weekTerm=1">2025년 봄학기 0주차</a> <span style="font-size:11px;color:#808080">[읽음]</span>
+</div>
+      
+      </div>
+    </div>
+    <div class="left_banner"><a href="http://www.manbangschool.org/" target="_blank"><img src="/_Parent/images/banner002.png?ver=240508" width="236"></a><br><img src="/_Parent/images/banner003.png?ver=240509_1" width="236"></div>
+  </div>
+</div>
+
+    <div id="right">
+      
+      <div id="contenttitle">2025년 봄학기 4주차 주간통신문 </div>
+      <!--<div class="right_button2"><a href="javascript:week_Report('147669')"><img src="/_Parent/images/button_printer.gif" width="78" height="22" border="0" /></a></div>//-->
+      <div id="ContentMenu"><!-- 2024-02-23 -->
+        <dl>
+		
+			  <dd><img src="/_Parent/images/sub_button_24_01a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_02a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_03b.png" width="133" height="56" border="0"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_04a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_05a.png" width="133" height="56" align="absmiddle"></dd>
+			
+			  <dd><img src="/_Parent/images/sub_button_24_06a.png" width="133" height="56" align="absmiddle"></dd>
+			
+
+		</dl>
+      </div>
+      <div id="quick"><a href="javascript:ScrollTop();"><img src="/images/sub_top_button.gif" width="44" height="40" align="absmiddle"></a></div>
+      <div id="Contents">
+
+		 
+		<!-- 교욱정보 //-->
+			  
+			 <div class="weekly_ReportTest">
+				
+			 </div>
+			 
+			 <div class="sub_top_title"><a name="Weekly02" id="Weekly02"></a><img src="/_Parent/images/sub_top_title02_new.png" align="absmiddle"></div>
+			 <div class="weekly_contents">&nbsp;
+<p style="text-align:justify"><span style="font-family:돋움"><span style="font-size:14px"><strong>- Studio Art 수업의 ‘Junk Art’ 프로젝트</strong><br>
+Studio Art Class는 SAP12 학생들이 시각적 표현 기술을 배우고, 기술에 자신의 관점과 가치를 더해가는 경험을 하도록 이루어 집니다. 최근 ‘JUNK ART’ 프로젝트를 진행하며, 학생들은 쓰레기가 환경에 미치는 영향과 재활용 방법에 대한 리서치를 바탕으로, 쓰레기를 활용하여 환경오염, 미디어 사용의 부작용 등 사회적 메시지를 담은 작품을 제작하였습니다. 플라스틱 파도, 버려진 목공재로 만든 로봇 등으로 구성된 작품 전시회를 진행하며, 전하고자 했던 메시지와 제작 과정에서 느낀 점을 발표하였습니다. 관점과 가치를 전달하는데 표현 기술이 좋은 도구로 활용되는 것처럼, 믿음 위에 실력을 쌓아 선한 가치를 주변에 효과적으로 전달하는 학생들이 되기를 바랍니다.</span></span><br>
+<br>
+<span style="color:rgb(0, 0, 0); font-family:arial,sans-serif; font-size:10pt"><img alt="" src="/FileFolder/Editor/Temp/2025031811235846.jpg" style="height:602px; width:800px"></span><br>
+&nbsp;</p>
+<br></div>
+			 <div class="weekly_dot">&nbsp;</div>
+			         
+
+		 	<!-- 2024-05-13 //-->
+			 
+			 <div class="sub_top_title"><a name="Weekly04" id="Weekly04"></a><img src="/_Parent/images/sub_top_title04_new.png" align="absmiddle"></div>
+			 <div class="weekly_contents"><p style="text-align:justify"><br>
+<span style="font-family:돋움"><span style="font-size:14px"><span style="background-color:transparent">- 고등학생들에게 학교 생활 중 가장 소중한 시간이 무엇인지 물어보면, 대부분이 동생들과 함께 하는 생활관이라고 대답입니다. 생활관에서 형/언니들은 사랑의 흐름을 잇고, 동생들에게 사랑의 모델이 되어주기 위하여 노력합니다. 형/언니들의 격려와 사랑, 섬김의 순간들이 동생들에게 감동으로 전달됩니다. 동생들도 사랑을 흘려 보내는 사람이 될 것을 자연스럽게 결심하며, 이는 바른 성장의 동력이 됩니다. ‘진심으로 반응하라’라는 이번 학기 목표를 향해 노력하는 과정 가운데, ㅅ경에서 가르쳐주는 사랑을 주고 받으며, 건강한 수직문화를 형성해가는 학생들이 되어가길 바랍니다.</span><br>
+<br>
+<span style="background-color:transparent">- 환절기 감기가 발생할 수 있는 시기입니다. 가벼운 감기 증상의 경우 의무실에서 약을 받아 복용하도록 하며, 증상에 따라 학교 근처 내과 또는 하얼빈 시내 대학병원에서 진료를 받습니다. 중국에서는 필수로 채혈 검사를 하여 염증수치와 바이러스 및 세균의 종류를 파악합니다. 예방이 가장 중요한만큼 바른 생활 습관 형성의 중요성을 지속적으로 강조합니다. 어린 학생들의 경우 처방약 및 건강보조식품 섭취 여부를 표로 만들어 체크하고 있습니다.</span><br>
+<br>
+<span style="background-color:transparent">- 만방국제학교 입학안내서에 기재되어 있는 ‘의무 원칙’을 참고해주시기 바랍니다.</span><br>
+<span style="background-color:transparent">본교에서는 학생들의 건강을 최우선으로 하여 학생들의 건강상황에 대해 민감하게 대처하고 있습니다. 특히 유학생의 건강에 대해서는 아래의 원칙에 따라 시행합니다.<br>
+&nbsp;&nbsp;</span><span style="background-color:transparent">1) 감기와 같은 보편적인 질병 이외에 의사 소견으로 정밀 검사를 요구하거나 장기간의 치료가 필요할 경우 귀가조치 합니다.<br>
+&nbsp;&nbsp;</span><span style="background-color:transparent">2) 학생들의 유전적인 체질이나 면역력 등의 이유로 중국에서 처방받은 약이 효과가 없을 경우 귀가조치 하여 정확한 진단을 받고 필요한 약을 처방받을 수 있도록 합니다.<br>
+&nbsp;&nbsp;</span><span style="background-color:transparent">3) 전염성이 강한 바이러스성 감기, 독감, 수두 등의 질병이 의심될 경우 기숙 학교의 특징을 고려하여 신속하게 귀가조치 할 수 있습니다.&nbsp;<br>
+&nbsp;&nbsp;</span><span style="background-color:transparent">4) 전염성이 강한 질병으로 귀가하여 치료를 할 경우 귀교전 기숙사 학교 생활 가능 여부에 대한 의사소견서를 제출해야 합니다.<br>
+&nbsp;&nbsp;</span><span style="background-color:transparent">5) 이외에 귀가하여 치료 받는 것이 합당하다고 판단되면 부모님과 소통 후 귀가 합니다.</span></span></span></p>
+
+<div>&nbsp;</div>
+</div>
+			 <div class="weekly_dot">&nbsp;</div>
+			 
+		 	<!-- 2024-05-13 //-->
+
+			
+			 <div class="sub_top_title"><a name="Weekly03" id="Weekly03"></a><img src="/_Parent/images/sub_top_title03_new24.png" align="absmiddle"></div>
+			 <div class="weekly_contents">
+				<br>
+				- 지난 가지모임에서는 학부모 세미나에서 다룬 ‘대학 입시 과정의 목적과 의미’를 학생들에게 소개하였습니다. <br>1. 대학 이후의 삶을 준비하는 과정입니다. <br>2. 이미 받은 축복과 약속을 발견하는 과정입니다.<br>3. 바른 방향으로 힘차게 달려가야 합니다. <br>때로는 욕심과 조급함으로 좌절할 수 있지만, 중요한 것은 베풀기 위해 공부한다는 결단을 잊지 않는 것이며, 더 큰 비전을 품고 꾸준히 나아가는 과정속에서 성장할 시간을 기대하자고 나누었습니다. <br>또한, 학부모님들께서 남겨주신 감상문을 익명으로 소개하며, 학생들이 부모님의 마음을 헤아려 볼 수 있도록 도움을 주었습니다. <br>이어서 줄탁동시(啐啄同時)라는 사자성어를 소개하며, 자신의 노력이 필요함과 동시에 도와주시는 분들의 수고를 이해하고 진심으로 감사하는 태도 또한 중요한 성장의 요소임을 설명하였습니다.<br><br>병아리는 알껍질을 깨고 나오기 위해 안에서 열심히 쪼아댑니다.(啐) <br>그러나 병아리의 아직 덜 여문 부리로는 단단한 알을 혼자 힘으로 깨고 나오기가 벅찹니다. <br>알을 관찰하고 기다리던 어미닭은 이런 병아리의 미약한 신호를 알아채고 바깥에서 같이 쪼아주면서 병아리의 부화를 도와줍니다.(啄) <br>그리고 이 일은 동시에 이루어집니다.(同時) 그러나 병아리가 혼자 힘으로 깨려다 질식하거나, 어미닭이 서두르면 준비되지 않은 병아리가 호흡하지 못해 죽을 수 있습니다.<br><br>학생들에게 ‘스스로 주도적으로 반응’하는 것이 중요함을 강조하였습니다. 또한, 그런 학생들의 움직임을 살피며 든든한 버팀목이 되어 주시는 부모님께 감사하는 마음을 가지고, 선생님들의 지도에도 솔직하게 진심으로 반응할 것을 당부하였습니다. <br><br>- 매주 특강과 JG, 가지모임 후 들은 메시지를 ‘리더십’에 어떻게 적용할 것인지 함께 생각하고 토의하는 시간을 갖고 있습니다. 11학년은 교내에서 이미 많은 동생들의 리더이기에, 리더십 역량을 키워가는 한 학기가 되기를 바랍니다. <br><br>- 가지 JG 시간에는 Kennah McCurry 선생님께서 겨자씨 비유에 대한 말씀을 전해주셨습니다. ㅁ음의 시작은 작은 겨자씨만 할 수 있지만, ㅁ씀과 ㄱㄷ 속에서, 공동체의 도움 속에서 뿌리내리는 과정이 중요합니다. 또한, 씨앗이 자라 새들이 쉴 수 있는 나무가 된다는 ㅁ태복음의 ㅁ씀처럼, 우리의 ㅁ음 역시 누군가에게 복의 통로가 되는 것이 중요함을 강조하셨습니다.<br>
+			 </div>
+			 <div class="weekly_dot">&nbsp;</div>
+			         
+         
+
+		<!-- 교욱정보 //-->
+		
+
+      </div>
+      
+	 <div class="pagination"><!-- 2024-02-23 -->
+		
+		<a class="prev" href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147669&amp;P_WEEKREPORT_PAGE=2&amp;Left_weekYear=2025&amp;Left_weekTerm=1"><img src="/_Parent/images/sub_bottom_arrow_prev.png" width="135" onmouseover="this.src='/_Parent/images/sub_bottom_arrow_prevb.png'" onmouseout="this.src='/_Parent/images/sub_bottom_arrow_prev.png'"></a>
+		
+		<!--<span>3 / 6</span>//-->
+		
+		<a class="next" href="/_Parent/WeeklyReport/WeekReportView.asp?IDX=147669&amp;P_WEEKREPORT_PAGE=4&amp;Left_weekYear=2025&amp;Left_weekTerm=1"><img src="/_Parent/images/sub_bottom_arrow_next.png" width="135" onmouseover="this.src='/_Parent/images/sub_bottom_arrow_nextb.png'" onmouseout="this.src='/_Parent/images/sub_bottom_arrow_next.png'"></a>
+		
+	 </div>
+    </div>
+  </div>
+</div>
+<style>
+/* Main_Popup */
+.main_popup_w {position:relative; width:100%; height:0; margin:0;}
+.main_popup_w p{margin:0; padding:0;}
+.main_popup_w .main_popup { background:#fff; z-index:10000000; border:1px solid #1c1c1c; position:absolute; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); }
+.main_popup_w .main_popup dl { margin:-1px;overflow:hidden;background:#1c1c1c; height:40px;}
+.main_popup_w .main_popup dl dt { float:left; padding:8px 0 0 10px;}
+.main_popup_w .main_popup dl dt a { font-size:13px; color:#fff;text-decoration:none;}
+.main_popup_w .main_popup dl dd { float:right; text-align:right; padding:8px 10px 0 0 ;}
+.main_popup_w .main_popup dl dd a { text-align:right; font-size:12px; color:rgba(255, 255, 255, 0.5);}
+.main_popup_w .main_popup .main_popup_con {/*overflow:hidden;*/line-height:0;}
+.main_popup_w .main_popup .main_popup_con *{line-height:1.6;}
+.main_popup_w .main_popup .main_popup_con img { width:100% !important;line-height:0;height:auto !important}
+</style>
+
+
+
+<!-- Popup //-->
+<script>
+$(document).ready(function() { 
+	
+});
+
+function w_main_popup_close(id_name){
+	$("#"+id_name).hide();
+}
+
+function w_today_close(id_name, expiredays) {
+	SetCookie(id_name, "expire", expiredays);
+	var blnCookie = GetCookie(id_name);
+	$("#"+id_name).hide();
+}
+
+// 창열기  
+function w_today_open(id_name) {
+	var blnCookie = $.trim(GetCookie(id_name));
+	if (blnCookie == "") {
+		$("#"+id_name).show();
+	} else {
+		$("#"+id_name).hide();
+	}
+}
+</script>
+<!-- Popup //-->
+
+
+
+
+
+<style>
+#modal {
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index:999999;
+}
+
+#modal h2 {
+  margin:0;   
+}
+
+#modal button {
+  display:inline-block;
+}
+
+#modal .modal_content {
+  width:450px;
+  height:100px;
+  margin:80px 480px;
+  padding:20px 10px;
+  background:#fff;
+  border:2px solid #666;
+}
+
+#modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}   
+</style>
+
+<div id="modal" style="display: none;">
+   
+    <div class="modal_content">
+
+		<table border="0">
+		<tbody><tr>
+			<td colspan="2">
+				<h3>개인정보 보호를 위해 3개월에 한번씩 비밀번호를 변경해주세요.</h3>			
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td width="50%">
+				<div style="float:left;"><input type="checkbox" name="chkbox" id="todaycloseyn" value="Y"></div>
+				<div style="float:left;margin-top:2px;">오늘하루 열지않기</div>
+			</td>
+			<td>
+				<div style="float:right;">
+					<button type="button" onclick="javascript:closeWin();">닫기</button>						
+				</div>
+				<div style="float:right;margin-right:5px;">
+					<button type="button" onclick="javascript:location.href='/_Parent/MyPage/Member_Modify.asp';">지금변경하기</button>						
+				</div>
+			</td>
+		</tr>
+		</tbody></table>
+       
+    </div>
+   
+    <div class="modal_layer"></div>
+</div>
+
+<script>
+
+    //쿠키설정    
+    function setCookie( name, value, expiredays ) {
+    var todayDate = new Date();
+		todayDate.setDate( todayDate.getDate() + expiredays );
+		document.cookie = name + '=' + escape( value ) + '; path=/; expires=' + todayDate.toGMTString() + ';'
+    }
+
+    //쿠키 불러오기
+    function getCookie(name) 
+    { 
+        var obj = name + "="; 
+        var x = 0; 
+        while ( x <= document.cookie.length ) 
+        { 
+            var y = (x+obj.length); 
+            if ( document.cookie.substring( x, y ) == obj ) 
+            { 
+                if ((endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) 
+                    endOfCookie = document.cookie.length;
+                return unescape( document.cookie.substring( y, endOfCookie ) ); 
+            } 
+            x = document.cookie.indexOf( " ", x ) + 1; 
+            
+            if ( x == 0 ) break; 
+        } 
+        return ""; 
+    }
+
+    //닫기 버튼 클릭시
+    function closeWin(key)
+    {
+        if($("#todaycloseyn").prop("checked"))
+        {
+            setCookie('modalpop', 'Y' , 1 );
+        }
+        $("#modal").hide();
+    }
+  
+    $(function(){    
+        if(getCookie("modalpop") != "Y"){
+            $("#modal").show();
+        }else if(getCookie("modalpop") != "N"){
+            $("#modal").hide();		
+		}
+    });
+
+</script>
+
+
+
+
+
+</body></html>

@@ -14,7 +14,7 @@ import sys # sys 모듈 임포트
 # --- 설정 (필요에 따라 수정) ---
 BASE_URL = "https://wb.manbangschool.org/_Parent/WeeklyReport/WeekReportView.asp"
 SAVE_DIR = "weekly_notices"
-FONT_PATH = "NotoSansKR-VariableFont_wght.ttf"
+# FONT_PATH = "NotoSansKR-VariableFont_wght.ttf" # 이 부분을 동적으로 변경
 
 # PyInstaller로 패키징될 때 chromedriver.exe의 경로를 동적으로 설정
 def get_webdriver_path():
@@ -23,6 +23,14 @@ def get_webdriver_path():
         return os.path.join(os.path.dirname(sys.executable), "chromedriver.exe")
     else: # 개발 환경에서 실행될 때
         return "chromedriver.exe"
+
+# PyInstaller로 패키징될 때 폰트 파일의 경로를 동적으로 설정
+def get_font_path():
+    if getattr(sys, 'frozen', False): # PyInstaller로 실행될 때
+        # --add-data 옵션으로 추가된 파일은 sys._MEIPASS 경로에 위치
+        return os.path.join(sys._MEIPASS, "NotoSansKR-VariableFont_wght.ttf")
+    else: # 개발 환경에서 실행될 때
+        return "NotoSansKR-VariableFont_wght.ttf"
 
 # --- 이미지 다운로드 함수 ---
 def download_image(image_url, folder_path, image_name):
@@ -46,7 +54,10 @@ def download_image(image_url, folder_path, image_name):
         return None
 
 # --- 웹 페이지 내용을 PDF로 변환하는 함수 (FPDF 사용) ---
-def convert_to_pdf(title, text_content, image_paths, pdf_file_path, font_path=FONT_PATH):
+def convert_to_pdf(title, text_content, image_paths, pdf_file_path, font_path=None):
+    if font_path is None:
+        font_path = get_font_path() # 동적으로 폰트 경로 가져오기
+
     try:
         pdf = FPDF('P', 'mm', 'A4')
         pdf.add_page()
@@ -55,7 +66,8 @@ def convert_to_pdf(title, text_content, image_paths, pdf_file_path, font_path=FO
             pdf.add_font('NanumGothic', '', font_path, uni=True)
             pdf.set_font('NanumGothic', '', 12)
         except Exception as e:
-            # print(f"PDF 폰트 설정 오류: {e}. 한글 폰트 파일({font_path})이 올바른지 확인하세요.") # GUI로 메시지 전달
+            # GUI로 메시지 전달
+            print(f"PDF 폰트 설정 오류: {e}. 한글 폰트 파일({font_path})이 올바른지 확인하세요. Arial 폰트로 대체합니다.")
             pdf.set_font('Arial', '', 12)
 
         pdf.set_font('NanumGothic', 'B', 16)
@@ -82,11 +94,11 @@ def convert_to_pdf(title, text_content, image_paths, pdf_file_path, font_path=FO
         pass
 
 class WeeklyNoticeScraper:
-    def __init__(self, base_url=BASE_URL, save_dir=SAVE_DIR, font_path=FONT_PATH):
+    def __init__(self, base_url=BASE_URL, save_dir=SAVE_DIR):
         self.webdriver_path = get_webdriver_path() # 동적으로 경로 가져오기
+        self.font_path = get_font_path() # 동적으로 폰트 경로 가져오기
         self.base_url = base_url
         self.save_dir = save_dir
-        self.font_path = font_path
         self.driver = None
         self.wait = None
         self.stop_event = threading.Event()

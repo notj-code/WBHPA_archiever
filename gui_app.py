@@ -9,7 +9,7 @@ from script import WeeklyNoticeScraper # script.py에서 WeeklyNoticeScraper 클
 class Application(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("주간 통신문 아카이버")
+        self.title("김준원표 주간 통신문 아카이버")
         self.geometry("500x400")
         self.resizable(False, False)
 
