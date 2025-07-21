@@ -6,15 +6,14 @@ from selenium.webdriver.support.ui import Select
 import os
 import time
 import requests
-from fpdf import FPDF
-from urllib.parse import urljoin
+import base64 # 이미지 base64 인코딩을 위해 추가
 import threading
 import sys # sys 모듈 임포트
+import tempfile # 임시 파일 생성을 위해 추가
 
 # --- 설정 (필요에 따라 수정) ---
 BASE_URL = "https://wb.manbangschool.org/_Parent/WeeklyReport/WeekReportView.asp"
 SAVE_DIR = "weekly_notices"
-# FONT_PATH = "NotoSansKR-VariableFont_wght.ttf" # 이 부분을 동적으로 변경
 
 # PyInstaller로 패키징될 때 chromedriver.exe의 경로를 동적으로 설정
 def get_webdriver_path():
@@ -23,14 +22,6 @@ def get_webdriver_path():
         return os.path.join(os.path.dirname(sys.executable), "chromedriver.exe")
     else: # 개발 환경에서 실행될 때
         return "chromedriver.exe"
-
-# PyInstaller로 패키징될 때 폰트 파일의 경로를 동적으로 설정
-def get_font_path():
-    if getattr(sys, 'frozen', False): # PyInstaller로 실행될 때
-        # --add-data 옵션으로 추가된 파일은 sys._MEIPASS 경로에 위치
-        return os.path.join(sys._MEIPASS, "NotoSansKR-VariableFont_wght.ttf")
-    else: # 개발 환경에서 실행될 때
-        return "NotoSansKR-VariableFont_wght.ttf"
 
 # --- 이미지 다운로드 함수 ---
 def download_image(image_url, folder_path, image_name):
@@ -53,50 +44,87 @@ def download_image(image_url, folder_path, image_name):
         # print(f"  > 이미지 처리 중 오류 발생: {e}") # GUI로 메시지 전달
         return None
 
-# --- 웹 페이지 내용을 PDF로 변환하는 함수 (FPDF 사용) ---
-def convert_to_pdf(title, text_content, image_paths, pdf_file_path, font_path=None):
-    if font_path is None:
-        font_path = get_font_path() # 동적으로 폰트 경로 가져오기
-
+# --- Selenium을 사용하여 HTML 내용을 PDF로 인쇄하는 함수 ---
+def print_html_to_pdf_with_selenium(driver, title, page_text, page_images, pdf_file_path, progress_callback=None):
+    temp_html_file = None
     try:
-        pdf = FPDF('P', 'mm', 'A4')
-        pdf.add_page()
-        
-        try:
-            pdf.add_font('NanumGothic', '', font_path, uni=True)
-            pdf.set_font('NanumGothic', '', 12)
-        except Exception as e:
-            # GUI로 메시지 전달
-            print(f"PDF 폰트 설정 오류: {e}. 한글 폰트 파일({font_path})이 올바른지 확인하세요. Arial 폰트로 대체합니다.")
-            pdf.set_font('Arial', '', 12)
+        # 모든 텍스트와 이미지를 포함하는 단일 HTML 파일 생성
+        html_content = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{title}</title>
+    <style>
+        body {{ font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', sans-serif; line-height: 1.6; margin: 20mm; }}
+        h1 {{ text-align: center; margin-bottom: 20px; }}
+        img {{ max-width: 100%; height: auto; display: block; margin: 10px auto; border: 1px solid #eee; }}
+        .page-break {{ page-break-before: always; }}
+    </style>
+</head>
+<body>
+    <h1>{title}</h1>
+    <div class="content">
+"""
 
-        pdf.set_font('NanumGothic', 'B', 16)
-        pdf.multi_cell(0, 10, title, align='C')
-        pdf.ln(10)
+        # 텍스트 내용 추가
+        html_content += f"<pre style=\"white-space: pre-wrap; word-wrap: break-word;\">{page_text}</pre>"
 
-        pdf.set_font('NanumGothic', '', 12)
-        pdf.multi_cell(0, 7, text_content)
-        pdf.ln(5)
-
-        for img_path in image_paths:
+        # 이미지 추가 (base64 인코딩 또는 로컬 경로 사용)
+        for img_path in page_images:
             if img_path and os.path.exists(img_path):
                 try:
-                    pdf.image(img_path, x=10, w=190) 
-                    pdf.ln(10)
+                    # 이미지를 base64로 인코딩하여 HTML에 직접 삽입
+                    with open(img_path, "rb") as image_file:
+                        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+                    html_content += f'<img src="data:image/jpeg;base64,{encoded_string}" alt="Image"/>'
                 except Exception as e:
-                    # print(f"  > PDF에 이미지 추가 실패: {img_path} - {e}") # GUI로 메시지 전달
-                    pass
+                    if progress_callback: progress_callback(f"  > HTML에 이미지 삽입 실패: {img_path} - {e}")
 
-        pdf.output(pdf_file_path)
-        # print(f"PDF 파일 생성 완료: {pdf_file_path}") # GUI로 메시지 전달
+        html_content += f"""
+    </div>
+</body>
+</html>
+"""
+
+        # 임시 HTML 파일 생성
+        fd, temp_html_file = tempfile.mkstemp(suffix=".html", prefix="weekly_notice_")
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        
+        if progress_callback: progress_callback(f"  > 임시 HTML 파일 생성: {temp_html_file}")
+
+        # Selenium 드라이버로 임시 HTML 파일 로드
+        driver.get(f"file:///{os.path.abspath(temp_html_file)}")
+        time.sleep(2) # 페이지 로드 대기
+
+        # PDF 인쇄 옵션 (필요에 따라 조정)
+        print_options = {
+            'landscape': False,
+            'displayHeaderFooter': False,
+            'printBackground': True,
+            'preferCSSPageSize': True,
+        }
+
+        # PDF로 인쇄
+        pdf_base64 = driver.print_page(print_options)
+        pdf_bytes = base64.b64decode(pdf_base64)
+
+        with open(pdf_file_path, "wb") as f:
+            f.write(pdf_bytes)
+        
+        if progress_callback: progress_callback(f"PDF 파일 생성 완료: {pdf_file_path}")
+
     except Exception as e:
-        # print(f"PDF 변환 중 오류 발생: {e}") # GUI로 메시지 전달
-        pass
+        if progress_callback: progress_callback(f"PDF 변환 중 오류 발생: {e}")
+    finally:
+        if temp_html_file and os.path.exists(temp_html_file):
+            os.remove(temp_html_file)
+            if progress_callback: progress_callback(f"  > 임시 HTML 파일 삭제: {temp_html_file}")
 
 class WeeklyNoticeScraper:
     def __init__(self, base_url=BASE_URL, save_dir=SAVE_DIR):
         self.webdriver_path = get_webdriver_path() # 동적으로 경로 가져오기
-        self.font_path = get_font_path() # 동적으로 폰트 경로 가져오기
         self.base_url = base_url
         self.save_dir = save_dir
         self.driver = None
@@ -152,8 +180,6 @@ class WeeklyNoticeScraper:
             if progress_callback:
                 progress_callback(f"로그인 실패 또는 페이지 로드 오류: {e}")
             return False
-
-    # get_available_semesters 함수는 더 이상 GUI에서 사용하지 않으므로 제거합니다.
 
     def scrape_selected_semester_from_browser(self, progress_callback=None, stop_event=None):
         self.stop_event = stop_event if stop_event else threading.Event()
@@ -225,7 +251,7 @@ class WeeklyNoticeScraper:
                 if progress_callback: progress_callback(f"\n--- ({i+1}/{len(weekly_notices_info)}) {notice_text} 스크래핑 시작 ---")
                 
                 self.driver.get(notice_href)
-                time.sleep(2)
+                time.sleep(2);
 
                 # 파일명 및 폴더명에 불필요한 문자 제거
                 clean_notice_text = notice_text.replace(' ', '_').replace('/', '_').replace(':', '').replace('[읽음]', '').strip()
@@ -233,8 +259,6 @@ class WeeklyNoticeScraper:
                 current_notice_folder = os.path.join(self.save_dir, folder_name)
                 os.makedirs(current_notice_folder, exist_ok=True)
 
-                all_pages_text = ""
-                all_images_for_pdf = []
                 page_num = 1
 
                 while True:
@@ -255,7 +279,6 @@ class WeeklyNoticeScraper:
                     try:
                         content_element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".weekly_contents")))
                         page_text = content_element.text.strip()
-                        all_pages_text += f"\n--- 페이지 {page_num} ---\n{page_text}\n"
                     except Exception as e:
                         if progress_callback: progress_callback(f"  > 본문 텍스트 추출 실패: {e}")
                     
@@ -269,7 +292,6 @@ class WeeklyNoticeScraper:
                                 downloaded_path = download_image(img_url, current_notice_folder, img_name)
                                 if downloaded_path:
                                     page_images.append(downloaded_path)
-                                    all_images_for_pdf.append(downloaded_path)
                     except Exception as e:
                         if progress_callback: progress_callback(f"  > 이미지 추출/다운로드 실패: {e}")
                     
@@ -284,24 +306,36 @@ class WeeklyNoticeScraper:
                         f.write(f"제목: {title}\n\n{page_text}")
                     if progress_callback: progress_callback(f"  > 텍스트 파일 저장 완료: {txt_file_path}")
                     
-                    next_button_found = False
+                    # PDF를 매 페이지마다 저장
+                    pdf_output_path = os.path.join(current_notice_folder, f"{clean_notice_text}_page{page_num}.pdf")
+                    print_html_to_pdf_with_selenium(self.driver, title, page_text, page_images, pdf_output_path, progress_callback)
+
+                    # 주간 통신문 끝을 나타내는 요소 확인
+                    end_of_notice_found = False
                     try:
-                        next_button = self.driver.find_element(By.CSS_SELECTOR, ".pagination .next")
-                        if next_button.is_displayed() and next_button.is_enabled():
-                            next_page_href = next_button.get_attribute("href")
-                            if next_page_href:
-                                self.driver.get(next_page_href)
-                                time.sleep(2)
-                                page_num += 1
-                                next_button_found = True
-                    except Exception as e:
-                        pass
+                        # id가 P_LAST_WEEKREPORT_READED_YN인 input 태그가 존재하는지 확인
+                        self.driver.find_element(By.ID, "P_LAST_WEEKREPORT_READED_YN")
+                        end_of_notice_found = True
+                        if progress_callback: progress_callback("  > 주간 통신문 끝 요소 감지. 현재 주차 스크래핑을 종료합니다.")
+                    except:
+                        pass # 요소가 없으면 계속 진행
 
-                    if not next_button_found:
+                    next_button_found = False
+                    if not end_of_notice_found: # 끝 요소가 발견되지 않았을 때만 다음 페이지 버튼 확인
+                        try:
+                            next_button = self.driver.find_element(By.CSS_SELECTOR, ".pagination .next")
+                            if next_button.is_displayed() and next_button.is_enabled():
+                                next_page_href = next_button.get_attribute("href")
+                                if next_page_href:
+                                    self.driver.get(next_page_href)
+                                    time.sleep(2);
+                                    page_num += 1
+                                    next_button_found = True
+                        except Exception as e:
+                            pass
+
+                    if not next_button_found or end_of_notice_found: # 다음 페이지 버튼이 없거나 끝 요소가 발견되면 페이지 루프 종료
                         break
-
-                pdf_output_path = os.path.join(current_notice_folder, f"{clean_notice_text}.pdf")
-                convert_to_pdf(title, all_pages_text, all_images_for_pdf, pdf_output_path, self.font_path)
 
                 if progress_callback: progress_callback(f"--- {notice_text} 스크래핑 완료 ---")
                 
