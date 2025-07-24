@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만방 주간 통신문 아카이버</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .download-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+        .instructions {
+            margin-top: 40px;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .instructions h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .instructions ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .instructions li {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #777;
+        }
+        .github-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #333;
+        }
+        .github-link svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+            transition: color 0.3s ease;
+        }
+        .github-link:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>만방학교 학부모 페이지 아카이버</h1>
+        <h1>Wanbang School Parent Portal Archiever</h1>
+        <p>만방에서의 기록들... 보관해야겠지?</p>
+        <p>만방학교 학부모 페이지를 PDF로 아카이빙하기 위한 프로그램입니다😊</p>
+        <a href="https://github.com/notj-code/WBHPA_archiever/archive/refs/heads/main.zip" class="download-btn">Download for Windows</a>
+
+        <div class="instructions">
+            <h2>📌사용 방법</h2>
+            <ul>
+                <li><strong>1. 프로그램 실행:</strong> 다운로드한 `gui_app.exe` 파일을 실행하세요.</li>
+                <li><strong>2. 로그인:</strong> '로그인하기' 버튼을 눌러 만방 학부모 페이지에 로그인하세요.</li>
+                <li><strong>3. 아카이빙 시작:</strong> 원하는 년도/학기를 선택한 후 '시작' 버튼을 누르세요.</li>
+                <li><strong>4. 확인:</strong> '저장된 폴더 열기'를 눌러 PDF로 저장된 통신문을 확인하세요.</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>🔧문제가 발생하거나 개선 사항이 있다면 GitHub 저장소를 방문해주세요.</p>
+            <a href="https://github.com/notj-code/WBHPA_archiever" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="View source on GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" height="32" width="32" aria-hidden="true">
+                    <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3.3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.3-6.2-10.1-27.8 2.3-57.4 0 0 21.9-7.8 72.1 25.5 21.3-5.9 44.2-8.8 67.1-8.8 22.9 0 45.9 2.9 67.1 8.8 50.2-33.3 72.1-25.5 72.1-25.5 12.4 29.6 4.6 51.2 2.3 57.4 16 17.6 23.6 31.4 23.6 58.9 0 96.5-56.4 104.2-112.6 110.2 9.1 7.8 17.2 23.2 17.2 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 389.9 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+                </svg>
+            </a>
+            <p id="copyright"></p>
+            <script>
+                const year = new Date().getFullYear();
+                document.getElementById('copyright').textContent = `Copyright ${year}. Junwon Kim. All rights reserved.`;
+            </script>
+        </footer>
+    </div>
+</body>
+</html>
